@@ -23,6 +23,11 @@ const employeeModel = mongooes.Schema({
         required:[true,'Enter the contact number'],
         minLength: 10,
         maxLength: 10
+    },
+    password:{
+        type:String,
+        required:true,
+        minLength:8
     }
 });
 

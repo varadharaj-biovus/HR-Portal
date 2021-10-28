@@ -25,11 +25,13 @@ const newEmployee = async(req,res,) => {
         first_name : req.body.first_name ,
         last_name: req.body.last_name,
         email: req.body.email,
-        mobile: req.body.mobile
+        mobile: req.body.mobile,
+        password:req.body.password
     });
 
     const save = await employee.save();
-    res.send(save);
+    res.send(save)
+   
   
 }catch{
   res.status(400);
