@@ -1,4 +1,5 @@
 const employeeModel = require("../models/employee.model");
+const { validationResult } = require('express-validator');
 
 // index page controlle
 const home = (req, res) => {
@@ -11,27 +12,28 @@ const error = (req, res) => {
 };
 
 // Created new employee
-const newEmployee = async(req,res) => {
-    try{
+const newEmployee = async(req,res,) => {
+    try {
+        const errors = validationResult(req); 
+  
+        if (!errors.isEmpty()) {
+          res.status(422).json({ errors: errors.array() });
+          return;
+        }
+  
     const employee = new employeeModel({
-        first_name :req.headers.first_name || req.body.first_name ,
-        last_name:req.headers.last_name || req.body.last_name,
-        email:req.headers.email || req.body.email,
-        mobile:req.headers.mobile || req.body.mobile
+        first_name : req.body.first_name ,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        mobile: req.body.mobile
     });
 
-    // const save = await employee.save();
-    // res.send(save);
-    employee.save();
-    
-    res.send(employee);
-    // .then(error =>{
-
-    // })
+    const save = await employee.save();
+    res.send(save);
+  
 }catch{
-    res.status(404);
-    res.send({error : "No added new employee"});
-
+  res.status(400);
+  res.json({error :"data not found"})
 }
 }
 
